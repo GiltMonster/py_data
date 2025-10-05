@@ -3,7 +3,10 @@ import os
 
 def main():
     """Função principal para gerenciar o ambiente virtual e baixar o dataset"""
-    Manager_venv.check_and_install_dependencies()
+    
+    if not os.path.exists("venv"):
+        print("O ambiente virtual não existe. Criando...")
+        Manager_venv.check_and_install_dependencies()
 
     if not os.path.exists("data"):
         os.makedirs("data")
@@ -11,6 +14,10 @@ def main():
         Manager_data.check_and_install_()
     else:
         print("O diretório 'data' já existe. Pulando o download do dataset.")
+
+    from src.Api_routes import Api_routes
+    api = Api_routes()
+    api.run()
 
 if __name__ == "__main__":
     main()
