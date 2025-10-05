@@ -1,17 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>About</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
 </head>
-
 <body>
     <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
         <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
@@ -23,16 +21,10 @@
             <li class="nav-item"><a href="/about" class="nav-link">Sobre</a></li>
         </ul>
     </header>
+    
     <main class="container">
-        <h1>Olá, essa é a página inicial!</h1>
-        {% if hostname %}
-        <p>Bem-vindo, {{hostname}} ao nosso site.</p>
-        {% else %}
-        <p>Bem-vindo, visitante ao nosso site.</p>
-        {% endif %}
-
-
+        <h1>Sobre Nós</h1>
+        <p>Esta é a página sobre nós.</p>
     </main>
 </body>
-
 </html>

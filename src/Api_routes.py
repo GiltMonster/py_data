@@ -13,6 +13,19 @@ class Api_routes:
         def home():
             return render_template('index.html', hostname=os.uname().nodename)
         
+        @self.app.route('/dados')
+        def dados():
+            data = {
+                "nome": "Lucas",
+                "idade": 30,
+                "cidade": "São Paulo"
+            }
+            return render_template('dados.html', data=data)
+        
+        @self.app.route('/about')
+        def about():
+            return render_template('about.html')
+
         @self.app.route('/status')
         def status():
             return {"status": "running"}
