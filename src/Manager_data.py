@@ -15,6 +15,6 @@ class Manager_data:
         print("Dataset baixado e salvo em 'data'.")
     
     @staticmethod
-    def check_and_install_():
+    def check_and_install_data():
         """Função de conveniência que mantém a interface original"""
         Manager_data.download_data()

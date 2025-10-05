@@ -31,7 +31,7 @@ class Manager_venv:
 
         # Verifica se as dependências estão instaladas
         try:
-            import Flask
+            import flask
             import pandas
             import numpy
             import kagglehub

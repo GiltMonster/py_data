@@ -4,14 +4,12 @@ import os
 def main():
     """Função principal para gerenciar o ambiente virtual e baixar o dataset"""
     
-    if not os.path.exists("venv"):
-        print("O ambiente virtual não existe. Criando...")
-        Manager_venv.check_and_install_dependencies()
+    Manager_venv.check_and_install_dependencies()
 
     if not os.path.exists("data"):
-        os.makedirs("data")
+        print("O diretório 'data' não existe. Baixando o dataset...")
         from src.Manager_data import Manager_data
-        Manager_data.check_and_install_()
+        Manager_data.check_and_install_data()
     else:
         print("O diretório 'data' já existe. Pulando o download do dataset.")
 
