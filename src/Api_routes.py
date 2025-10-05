@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-
+import os
 class Api_routes:
     def __init__(self, app=None):
         if app is None:
@@ -11,7 +11,7 @@ class Api_routes:
     def setup_routes(self):
         @self.app.route('/')
         def home():
-            return render_template('index.html')
+            return render_template('index.html', hostname=os.uname().nodename)
         
         @self.app.route('/status')
         def status():
