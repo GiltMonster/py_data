@@ -1,5 +1,8 @@
 from flask import Flask, render_template
-import os
+from markupsafe import Markup
+from src.functions.Sellers_data import Sellers_data 
+import plotly.express as px
+
 class Api_routes:
     def __init__(self, app=None):
         if app is None:
@@ -11,7 +14,18 @@ class Api_routes:
     def setup_routes(self):
         @self.app.route('/')
         def home():
-            return render_template('index.html', hostname=os.uname().nodename)
+            sellers = Sellers_data('data/olist_sellers_dataset.csv')
+            dashboard_html = Sellers_data.get_sellers_dashboard_html(sellers)
+
+            return render_template(
+                'index.html',
+                graph_html=Markup(dashboard_html['graph_html']),
+                produtos_html=Markup(dashboard_html['produtos_html']),
+                preco_html=Markup(dashboard_html['preco_html']),
+                frete_html=Markup(dashboard_html['frete_html']),
+                envio_html=Markup(dashboard_html['envio_html']),
+                cidade_html=Markup(dashboard_html['cidade_html'])
+            )
         
         @self.app.route('/dados')
         def dados():

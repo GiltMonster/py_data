@@ -25,12 +25,32 @@
     </header>
     <main class="container">
         <h1>Olá, essa é a página inicial!</h1>
-        {% if hostname %}
-        <p>Bem-vindo, {{hostname}} ao nosso site.</p>
-        {% else %}
-        <p>Bem-vindo, visitante ao nosso site.</p>
-        {% endif %}
+        <p>Bem-vindo ao meu projeto de Data Science com Python. Aqui você encontrará análises e visualizações de dados
+            interessantes.</p>
 
+        <div>
+            {{ graph_html|safe }}
+        </div>
+
+        <div>
+            {{ produtos_html|safe }}
+        </div>
+
+        <div>
+            {{ preco_html|safe }}
+        </div>
+
+        <div>
+            {{ frete_html|safe }}
+        </div>
+
+        <div>
+            {{ envio_html|safe }}
+        </div>
+
+        <div>
+            {{ cidade_html|safe }}
+        </div>
 
     </main>
 </body>

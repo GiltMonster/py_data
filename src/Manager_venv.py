@@ -36,12 +36,12 @@ class Manager_venv:
             import numpy
             import kagglehub
         except ImportError:
-            print("Dependências necessárias não encontradas: Flask, pandas, numpy, kagglehub, python-dotenv, watchdog.")
+            print("Dependências necessárias não encontradas: Flask, pandas, numpy, kagglehub, python-dotenv, watchdog, plotly, dash")
             user_input = input("Deseja instalar as dependências agora? (s/n): ").strip().lower()
 
             if user_input == 's':
                 print("Instalando dependências no ambiente virtual...")
-                subprocess.check_call([self.venv_python, "-m", "pip", "install", "Flask", "pandas", "numpy", "kagglehub", "python-dotenv", "watchdog"])
+                subprocess.check_call([self.venv_python, "-m", "pip", "install", "Flask", "pandas", "numpy", "kagglehub", "python-dotenv", "watchdog", "plotly", "dash"])
                 print("Dependências instaladas com sucesso! Continuando...")
 
                 # Recarregar módulos importados após instalação
