@@ -36,6 +36,14 @@ Para executar o projeto, siga os passos abaixo:
 
 ---
 
+## Principais bibliotecas utilizadas
+
+- Flask
+- Pandas
+- Plotly
+- Dash
+- KaggleHub
+
 ## Sobre o Conjunto de Dados de E-commerce Brasileiro da Olist
 
 Bem-vindo! Este é um conjunto de dados públicos de e-commerce brasileiro com pedidos feitos na Loja [Olist](https://www.olist.com/) disponibilizado no [Kaggle](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce). O conjunto de dados contém informações de 100 mil pedidos de 2016 a 2018, feitos em diversos marketplaces no Brasil. Seus recursos permitem visualizar um pedido em diversas dimensões: desde o **status do pedido**, **preço**, **pagamento** e **desempenho do frete até a localização do cliente**, **atributos do produto** e, por fim, **avaliações escritas por clientes**. Também foi disponibilizado um conjunto de dados de geolocalização que relaciona CEPs brasileiros às coordenadas de latitude/longitude.
