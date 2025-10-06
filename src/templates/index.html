@@ -19,7 +19,7 @@
         </a>
         <ul class="nav nav-pills">
             <li class="nav-item"><a href="/" class="nav-link active" aria-current="page">Home</a></li>
-            <li class="nav-item"><a href="/dados" class="nav-link">Dados</a></li>
+            <!-- <li class="nav-item"><a href="/dados" class="nav-link">Dados</a></li> -->
             <li class="nav-item"><a href="/about" class="nav-link">Sobre</a></li>
         </ul>
     </header>
@@ -28,28 +28,44 @@
         <p>Bem-vindo ao meu projeto de Data Science com Python. Aqui você encontrará análises e visualizações de dados
             interessantes.</p>
 
-        <div>
-            {{ graph_html|safe }}
+
+            <form action="/" method="post">
+                <div class="mb-3">
+                    <label for="limit" class="form-label">Número de Itens a Exibir:</label>
+                    <input type="number" class="form-control" id="limit" name="limit" value="{{ limit }}" min="1" max="1000" required placeholder="Digite um número entre 1 e 1000">
+                </div>
+                <button type="submit" class="btn btn-success">Atualizar</button>
+            </form>
+
+        <div class="row">
+            <div class="col">
+                {{ graph_html|safe }}
+            </div>
+
+            <div class="col">
+                {{ produtos_html|safe }}
+            </div>
         </div>
 
-        <div>
-            {{ produtos_html|safe }}
+        <div class="row">
+            <div class="col">
+                {{ preco_html|safe }}
+            </div>
+
+            <div class="col">
+                {{ frete_html|safe }}
+            </div>
         </div>
 
-        <div>
-            {{ preco_html|safe }}
-        </div>
 
-        <div>
-            {{ frete_html|safe }}
-        </div>
+        <div class="row">
+            <div class="col">
+                {{ envio_html|safe }}
+            </div>
 
-        <div>
-            {{ envio_html|safe }}
-        </div>
-
-        <div>
-            {{ cidade_html|safe }}
+            <div class="col">
+                {{ cidade_html|safe }}
+            </div>
         </div>
 
     </main>

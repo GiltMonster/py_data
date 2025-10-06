@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from markupsafe import Markup
 from src.functions.Sellers_data import Sellers_data 
 import plotly.express as px
@@ -12,10 +12,15 @@ class Api_routes:
         self.setup_routes()
     
     def setup_routes(self):
-        @self.app.route('/')
+        @self.app.route('/', methods=['GET', 'POST'])
         def home():
             sellers = Sellers_data('data/olist_sellers_dataset.csv')
-            dashboard_html = Sellers_data.get_sellers_dashboard_html(sellers)
+
+            if request.method == 'GET':
+                dashboard_html = Sellers_data.get_sellers_dashboard_html(sellers)
+            elif request.method == 'POST':
+                limit = int(request.form.get('limit', 10))
+                dashboard_html = Sellers_data.get_sellers_dashboard_html(sellers, limit=limit)
 
             return render_template(
                 'index.html',
@@ -26,15 +31,6 @@ class Api_routes:
                 envio_html=Markup(dashboard_html['envio_html']),
                 cidade_html=Markup(dashboard_html['cidade_html'])
             )
-        
-        @self.app.route('/dados')
-        def dados():
-            data = {
-                "nome": "Lucas",
-                "idade": 30,
-                "cidade": "São Paulo"
-            }
-            return render_template('dados.html', data=data)
         
         @self.app.route('/about')
         def about():
