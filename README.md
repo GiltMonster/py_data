@@ -2,6 +2,40 @@
 
 Este repositório contém scripts Python para configurar um ambiente virtual (venv), instalar dependências e baixar um conjunto de dados públicos de e-commerce brasileiro da Olist. O objetivo será de implementar uma pequena API em Flask para trabalhar com esses dados onde além do usu como API - REST, também será possível fazer análises exploratórias e visualizações de dados através do front-end do próprio Flask através de templates HTML.
 
+## TO-DO
+
+- [🟢] Configuração do ambiente virtual
+- [🟢] Instalação de dependências
+- [🟢] Download do conjunto de dados do Kaggle
+- [🟢] Implementação de uma API simples em Flask
+- [🟢] Análises exploratórias e visualizações de dados no front-end do Flask
+- [🔴] Implementação da API - REST completa
+
+## Executando o Projeto
+
+Para executar o projeto, siga os passos abaixo:
+
+1. Clone o repositório:
+
+   ```bash
+    git clone https://github.com/GiltMonster/py_data
+    cd py_data
+    ```
+
+2. Execute o script `index.py` e siga as instruções nele para configurar o ambiente virtual, instalar as dependências e baixar o conjunto de dados do Kaggle. E não se preocupe, esse script criará um ambiente virtual na pasta `venv`, instalará as dependências listadas na classe `Manager_venv` e baixará o conjunto de dados do que vem do [Kaggle](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce), salvando-o na pasta `data`.
+
+   ```bash
+   python3 index.py #Ou utilize o seu alias caso tenha um
+   ```
+
+3. Execute a aplicação Flask, que estará disponível no seu navegador na porta `3000`:
+
+    ```plaintext
+    http://localhost:3000/
+    ```
+
+---
+
 ## Sobre o Conjunto de Dados de E-commerce Brasileiro da Olist
 
 Bem-vindo! Este é um conjunto de dados públicos de e-commerce brasileiro com pedidos feitos na Loja [Olist](https://www.olist.com/) disponibilizado no [Kaggle](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce). O conjunto de dados contém informações de 100 mil pedidos de 2016 a 2018, feitos em diversos marketplaces no Brasil. Seus recursos permitem visualizar um pedido em diversas dimensões: desde o **status do pedido**, **preço**, **pagamento** e **desempenho do frete até a localização do cliente**, **atributos do produto** e, por fim, **avaliações escritas por clientes**. Também foi disponibilizado um conjunto de dados de geolocalização que relaciona CEPs brasileiros às coordenadas de latitude/longitude.
