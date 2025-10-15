@@ -2,6 +2,19 @@
 
 Este repositório contém scripts Python para configurar um ambiente virtual (venv), instalar dependências e baixar um conjunto de dados públicos de e-commerce brasileiro da Olist. O objetivo será de implementar uma pequena API em Flask para trabalhar com esses dados onde além do usu como API - REST, também será possível fazer análises exploratórias e visualizações de dados através do front-end do próprio Flask através de templates HTML.
 
+## Alguns ids de sellers para teste caso queira explorar os dados:
+
+- Seller ID - 01: `4a3ca9315b744ce9f8e9374361493884`
+- Seller ID - 02: `cca3071e3e9bb7d12640c9fbe2301306`
+- Seller ID - 03: `d91fb3b7d041e83b64a00a3edfb37e4f`
+- Seller ID - 04: `fa1e13f2614d7b5c4749cbc52fecda94`
+- Seller ID - 05: `7142540dd4c91e2237acb7e911c4eba2`
+- Seller ID - 06: `6560211a19b47992c3666cc44a7e94c0`
+- Seller ID - 07: `da8622b14eb17ae2831f4ac5b9dab84a`
+- Seller ID - 08: `ea8482cd71df3c1969d7b9473ff13abc`
+- Seller ID - 09: `3d871de0142ce09b7081e2b9d1733cb1`
+- Seller ID - 10: `7c67e1448b00f6e969d365cea6b010ab`
+
 ## TO-DO
 
 - [🟢] Configuração do ambiente virtual
