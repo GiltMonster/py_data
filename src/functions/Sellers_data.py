@@ -1,6 +1,7 @@
 import pandas as pd
 import os
 import plotly.express as px
+import plotly.graph_objects as px_go
 
 class Sellers_data:
     def __init__(self, csv_path):
@@ -16,24 +17,6 @@ class Sellers_data:
     def sellers_by_state(self):
         """Retorna a contagem de sellers por estado."""
         return self.df['seller_state'].value_counts()
-
-    def sellers_by_city(self, state=None):
-        """Retorna a contagem de sellers por cidade. Pode filtrar por estado."""
-        if state:
-            return self.df[self.df['seller_state'] == state]['seller_city'].value_counts()
-        return self.df['seller_city'].value_counts()
-
-    def top_cities(self, n=10):
-        """Retorna as cidades com mais sellers."""
-        return self.df['seller_city'].value_counts().head(n)
-
-    def sellers_zip_prefix(self, prefix):
-        """Retorna sellers que possuem determinado prefixo de CEP."""
-        return self.df[self.df['seller_zip_code_prefix'].astype(str).str.startswith(str(prefix))]
-
-    def get_seller_info(self, seller_id):
-        """Retorna informações de um seller específico."""
-        return self.df[self.df['seller_id'] == seller_id]
     
     def get_mergeable_sellers_with_orders_items_and_products(self):
         """Retorna um DataFrame resultante do merge entre sellers, orders, order_items e products."""
@@ -43,9 +26,9 @@ class Sellers_data:
         products = pd.read_csv('data/olist_products_dataset.csv')
 
         merged_df = sellers.merge(order_items, on='seller_id', how='inner').merge(products, on='product_id', how='inner').drop_duplicates()
-    
+        
         print(merged_df.head())
-
+        
         return merged_df
     
     def sellers_products_summary(self):
@@ -89,6 +72,12 @@ class Sellers_data:
         stats = merged.groupby('seller_id')['shipping_limit_date'].agg(['min', 'max', 'count']).reset_index()
         stats.rename(columns={'min': 'primeiro_envio', 'max': 'ultimo_envio', 'count': 'total_envios'}, inplace=True)
         return stats
+    
+    def best_products_sold(self, top_n=10):
+        """Retorna os produtos mais vendidos por quantidade."""
+        merged = self.get_mergeable_sellers_with_orders_items_and_products()
+        top_products = merged.groupby('product_category_name').size().reset_index(name='quantidade_vendida')
+        return top_products.sort_values(by='quantidade_vendida', ascending=False).head(top_n)
 
     def get_sellers_dashboard_html(sellers, limit=150):
         """Gera gráficos em HTML para o dashboard dos sellers, mostrando ranking dos maiores valores."""
@@ -101,7 +90,7 @@ class Sellers_data:
             df_states,
             x='seller_state', y='count',
             labels={'seller_state': 'Estado', 'count': 'Quantidade'},
-            title=f'Top {limit} Estados com mais vendedores'
+            title=f'Top Estados com mais vendedores'
         )
         graph_html = fig_estado.to_html(full_html=False)
 
@@ -168,6 +157,17 @@ class Sellers_data:
             title=f'Top {limit} Cidades com Mais vendedores')
         cidade_html = fig_cidade.to_html(full_html=False)
 
+        #ranking de produtos mais vendidos
+        df_best_products = sellers.best_products_sold(top_n=limit)
+        fig_best_products = px.bar(
+            df_best_products,
+            x='product_category_name',
+            y='quantidade_vendida',
+            labels={'product_category_name': 'Categoria do Produto', 'quantidade_vendida': 'Quantidade Vendida'},
+            title=f'Top {limit} Produtos Mais Vendidos por Categoria')
+        best_products_html = fig_best_products.to_html(full_html=False)
+
+
         return {
             'graph_html': graph_html,
             'produtos_html': produtos_html,
@@ -175,5 +175,39 @@ class Sellers_data:
             'frete_html': frete_html,
             'categorias_html': categorias_html,
             'envio_html': envio_html,
-            'cidade_html': cidade_html
+            'cidade_html': cidade_html,
+            'best_products_html': best_products_html
         }
+    
+    def get_sellers_details_html(sellers, seller_id):
+        """Gera gráficos em HTML com detalhes de um seller específico."""
+
+        # Detalhes do seller
+        info = sellers.sellers_products_details(seller_id)
+
+        if info.empty:
+            info_html = f"<h4>Nenhum dado encontrado para o Seller ID: <span class='text-danger'>{seller_id}</span></h4>"
+            return info_html
+        
+        #gerar tabela html
+        table_fig = px_go.Figure(
+            data=[px_go.Table(
+                header=dict(values=["Produto ID", "Categoria do Produto", "Tamanho do Nome do Produto",
+                                    "Tamanho da Descrição do Produto", "Quantidade de Fotos do Produto",
+                                    "Peso do Produto (g)", "Comprimento do Produto (cm)",
+                                    "Altura do Produto (cm)", "Largura do Produto (cm)"],
+                            fill_color='#636efa',
+                            font=dict(color='white', size=12),
+                            align='center',
+                            height=30),
+                cells=dict(values=[info[col] for col in info.columns],
+                           fill_color="#9aa0ff",
+                           align='center',
+                           font=dict(color='black', size=11)),
+                columnwidth=[200, 150, 80, 80, 80, 80, 80, 80, 80]
+            )],
+            layout=px_go.Layout(margin=dict(l=0, r=0, t=30, b=0))
+        )
+
+        info_html = f"<hr><h3>Detalhes dos Produtos do Seller ID: <span class='text-primary'>{seller_id}</span></h3>" + table_fig.to_html(full_html=True, include_plotlyjs='cdn')
+        return info_html

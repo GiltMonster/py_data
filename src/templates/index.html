@@ -12,30 +12,91 @@
         crossorigin="anonymous"></script>
 </head>
 
+<style>
+    .hidden {
+        display: none;
+    }
+</style>
+
+<script>
+    function find_seller() {
+        const seller_id = document.getElementById('seller_id').value;
+        fetch('/about_seller', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ seller_id: seller_id })
+        })
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('clearButton').classList.remove('hidden');
+                document.getElementById('dashboardArea').appendChild(document.createRange().createContextualFragment(html));
+                document.getElementById('searchButton').classList.add('hidden');
+            });
+    }
+
+    function clear_dashboard() {
+        document.getElementById('searchButton').classList.remove('hidden');
+        document.getElementById('clearButton').classList.add('hidden');
+        document.getElementById('dashboardArea').innerHTML = '';
+    }
+</script>
+
 <body>
     <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
         <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
             <span class="fs-4 mx-4">Py Data</span>
         </a>
         <ul class="nav nav-pills">
-            <li class="nav-item"><a href="/" class="nav-link active" aria-current="page">Home</a></li>
-            <!-- <li class="nav-item"><a href="/dados" class="nav-link">Dados</a></li> -->
-            <li class="nav-item"><a href="/about" class="nav-link">Sobre</a></li>
+            <!-- <li class="nav-item mx-4"><a href="/" class="nav-link active" aria-current="page">Home</a></li> -->
+            <!-- <li class="nav-item"><a href="/" class="nav-link">Dados</a></li> -->
+            <!-- <li class="nav-item"><a href="/" class="nav-link">Sobre</a></li> -->
         </ul>
     </header>
     <main class="container">
-        <h1>Olá, essa é a página inicial!</h1>
-        <p>Bem-vindo ao nosso projeto de Data Science com Python. Aqui você encontrará análises e visualizações de dados
-            interessantes.</p>
+        <h1>
+            Olá, bem vindo ao projeto Py_Data!
+        </h1>
+        <div class="card mb-4">
+            <div class="card-body">
+                <figure>
+                    <blockquote class="blockquote">
+                        <p>
+                            Este projeto tem como objetivo analisar dados de e-commerce utilizando Python, com foco em
+                            sellers, produtos, preços, frete, envios e cidades. Através de visualizações interativas,
+                            é possível explorar insights valiosos sobre o comportamento dos vendedores e suas vendas.
+                        </p>
+                    </blockquote>
+                </figure>
+            </div>
+        </div>
 
+        <hr>
 
-            <form action="/" method="post">
-                <div class="mb-3">
-                    <label for="limit" class="form-label">Número de Itens a Exibir:</label>
-                    <input type="number" class="form-control" id="limit" name="limit" value="{{ limit }}" min="1" max="1000" required placeholder="Digite um número entre 1 e 1000">
-                </div>
-                <button type="submit" class="btn btn-success">Atualizar</button>
-            </form>
+        <h2>Pesquise por um Seller ID específico:</h2>
+
+        <div class="mb-3">
+            <label for="seller_id" class="form-label">Seller ID:</label>
+            <input type="text" class="form-control" id="seller_id" name="seller_id" required
+                placeholder="Digite o Seller ID (ex: seller_123)">
+        </div>
+        <button class="btn btn-warning" onclick="find_seller()" id="searchButton">Pesquisar</button>
+        <button class="btn btn-danger hidden" onclick="clear_dashboard()" id="clearButton">Limpar</button>
+
+        <div id="dashboardArea" class="my-4"></div>
+
+        <hr>
+
+        <h2>Dashboard Geral</h2>
+        <p>Abaixo estão as visualizações gerais dos dados coletados.</p>
+
+        <form action="/" method="post">
+            <div class="mb-3">
+                <label for="limit" class="form-label">Número de Itens a Exibir:</label>
+                <input type="number" class="form-control" id="limit" name="limit" value="{{ limit }}" min="1" max="1000"
+                    required placeholder="Digite um número entre 1 e 1000">
+            </div>
+            <button class="btn btn-success">Atualizar</button>
+        </form>
 
         <div class="row">
             <div class="col">
@@ -57,7 +118,6 @@
             </div>
         </div>
 
-
         <div class="row">
             <div class="col">
                 {{ envio_html|safe }}
@@ -68,7 +128,17 @@
             </div>
         </div>
 
+        <div class="row">
+            <div class="col">
+                {{ categorias_html | safe }}
+            </div>
+        </div>
     </main>
+    <footer class="footer mt-auto py-3 bg-light">
+        <p class="text-center mt-4 mb-3 text-muted">&copy; 2025 - Lucas S. Campos</p>
+        <p class="text-center mb-3 text-muted">Projeto desenvolvido para fins educacionais em Data Science com Python.
+        </p>
+    </footer>
 </body>
 
 </html>

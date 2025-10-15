@@ -29,12 +29,21 @@ class Api_routes:
                 preco_html=Markup(dashboard_html['preco_html']),
                 frete_html=Markup(dashboard_html['frete_html']),
                 envio_html=Markup(dashboard_html['envio_html']),
-                cidade_html=Markup(dashboard_html['cidade_html'])
+                cidade_html=Markup(dashboard_html['cidade_html']),
+                categorias_html=Markup(dashboard_html['best_products_html'])
             )
         
-        @self.app.route('/about')
-        def about():
-            return render_template('about.html')
+        @self.app.route('/about_seller', methods=['POST'])
+        def about_seller():
+            sellers = Sellers_data('data/olist_sellers_dataset.csv')
+            data = request.get_json()
+            seller_id = data.get('seller_id')
+            if not seller_id:
+                return f"<h4 class='text-danger text-center'>Erro: Seller ID não fornecido.</h4>"
+            
+            details_html = Sellers_data.get_sellers_details_html(sellers, seller_id)
+            return details_html
+            
 
         @self.app.route('/status')
         def status():
