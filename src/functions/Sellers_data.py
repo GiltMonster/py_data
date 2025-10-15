@@ -27,8 +27,6 @@ class Sellers_data:
 
         merged_df = sellers.merge(order_items, on='seller_id', how='inner').merge(products, on='product_id', how='inner').drop_duplicates()
         
-        print(merged_df.head())
-        
         return merged_df
     
     def sellers_products_summary(self):
